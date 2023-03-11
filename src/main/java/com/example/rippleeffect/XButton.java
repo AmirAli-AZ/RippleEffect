@@ -31,7 +31,7 @@ public class XButton extends Button {
         return new XButtonSkin(this);
     }
 
-    public void init() {
+    private void init() {
         getStyleClass().add("xbutton");
         var metaData = new ArrayList<CssMetaData<? extends Styleable, ?>>();
         Collections.addAll(metaData, rippleRadiusCssMetaData, rippleColorCssMetaData, rippleOpacityCssMetaData);
