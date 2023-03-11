@@ -28,7 +28,6 @@ public class App extends Application {
     private Parent createContent() {
         var xbutton = new XButton("Click me");
         xbutton.setPrefSize(125, 25);
-        xbutton.
 
         var root = new VBox(xbutton);
         root.setAlignment(Pos.CENTER);
