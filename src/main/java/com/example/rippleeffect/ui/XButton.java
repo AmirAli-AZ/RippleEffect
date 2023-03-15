@@ -1,5 +1,7 @@
-package com.example.rippleeffect;
+package com.example.rippleeffect.ui;
 
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.BooleanPropertyBase;
 import javafx.css.*;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
@@ -8,8 +10,31 @@ import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 public class XButton extends Button {
+
+    private final PseudoClass ripplePseudoClass = PseudoClass.getPseudoClass("ripple");
+
+
+    private final BooleanProperty rippleStateProperty = new BooleanPropertyBase() {
+
+        @Override
+        protected void invalidated() {
+            super.invalidated();
+            pseudoClassStateChanged(ripplePseudoClass, get());
+        }
+
+        @Override
+        public Object getBean() {
+            return this;
+        }
+
+        @Override
+        public String getName() {
+            return "ripplePseudoClassListener";
+        }
+    };
 
     public XButton() {
         super();
@@ -33,9 +58,13 @@ public class XButton extends Button {
 
     private void init() {
         getStyleClass().add("xbutton");
-        var metaData = new ArrayList<CssMetaData<? extends Styleable, ?>>();
+    }
+
+    @Override
+    public List<CssMetaData<? extends Styleable, ?>> getControlCssMetaData() {
+        var metaData = new ArrayList<>(super.getControlCssMetaData());
         Collections.addAll(metaData, rippleRadiusCssMetaData, rippleColorCssMetaData, rippleOpacityCssMetaData);
-        getCssMetaData().addAll(Collections.unmodifiableList(metaData));
+        return metaData;
     }
 
     private final StyleableDoubleProperty rippleRadiusProperty = new SimpleStyleableDoubleProperty(rippleRadiusCssMetaData, this, "styleableRippleRadius");
@@ -114,5 +143,17 @@ public class XButton extends Button {
 
     public void setRippleOpacity(double rippleOpacityProperty) {
         this.rippleOpacityProperty.set(rippleOpacityProperty);
+    }
+
+    protected void setRippleState(boolean rippleState) {
+        rippleStateProperty.set(rippleState);
+    }
+
+    protected boolean getRippleState() {
+        return rippleStateProperty.get();
+    }
+
+    protected BooleanProperty rippleStateProperty() {
+        return rippleStateProperty;
     }
 }

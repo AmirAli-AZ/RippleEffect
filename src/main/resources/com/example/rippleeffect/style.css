@@ -12,3 +12,7 @@
     -fx-ripple-color: lightgray;
     -fx-ripple-opacity: 0.3;
 }
+
+.xbutton:ripple {
+    -fx-background-color: #C22F47;
+}

@@ -1,4 +1,4 @@
-package com.example.rippleeffect;
+package com.example.rippleeffect.ui;
 
 import javafx.animation.FadeTransition;
 import javafx.animation.Interpolator;
@@ -36,10 +36,12 @@ public class XButtonSkin extends ButtonSkin {
         fadeAnimation.setInterpolator(Interpolator.EASE_BOTH);
         fadeAnimation.setCycleCount(2);
         fadeAnimation.setAutoReverse(true);
+        fadeAnimation.setOnFinished(actionEvent -> button.setRippleState(false));
 
         button.addEventHandler(MouseEvent.MOUSE_CLICKED, mouseEvent -> {
             scaleAnimation.playFromStart();
             fadeAnimation.playFromStart();
+            button.setRippleState(true);
         });
     }
 
